@@ -3,8 +3,9 @@ from rest_framework import permissions, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-
 from quickstart.serializers import GroupSerializer, UserSerializer
+from rest_framework import generics, permissions
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -36,6 +37,31 @@ class PerfilView(APIView):
             "username": user.username,
             "email": user.email,
         })
+    
+    from rest_framework import generics, permissions
+from .models import Task
+from .serializers import TaskSerializer
+
+class TaskListCreateView(generics.ListCreateAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # retorna apenas tasks do usuário logado
+        return Task.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # associa o usuário logado à task
+        serializer.save(user=self.request.user)
+
+
+class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
+
 
 
 
