@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = '/api/tasks/' 
+
+LOGIN_URL = '/'
+
 
 # Application definition
 

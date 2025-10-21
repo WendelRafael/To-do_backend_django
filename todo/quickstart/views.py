@@ -6,6 +6,11 @@ from rest_framework.permissions import IsAuthenticated
 from quickstart.serializers import GroupSerializer, UserSerializer
 from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, permissions
+from .models import Task
+from .serializers import TaskSerializer
+from django.shortcuts import render, redirect
+from .form import UserRegisterForm
 
 
 
@@ -39,9 +44,6 @@ class PerfilView(APIView):
             "email": user.email,
         })
     
-from rest_framework import generics, permissions
-from .models import Task
-from .serializers import TaskSerializer
 
 class TaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
@@ -64,6 +66,19 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+    
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            return redirect('/')  # redireciona para página de login
+    else:
+        form = UserRegisterForm()
+    return render(request, 'quickstart/register.html', {'form': form})
 
 
 
