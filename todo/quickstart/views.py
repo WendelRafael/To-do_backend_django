@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from quickstart.serializers import GroupSerializer, UserSerializer
 from rest_framework import generics, permissions
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 
@@ -38,13 +39,15 @@ class PerfilView(APIView):
             "email": user.email,
         })
     
-    from rest_framework import generics, permissions
+from rest_framework import generics, permissions
 from .models import Task
 from .serializers import TaskSerializer
 
 class TaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['completed', 'data'] 
 
     def get_queryset(self):
         # retorna apenas tasks do usuário logado
