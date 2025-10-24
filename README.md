@@ -11,16 +11,16 @@ Repositório backend do projeto de lista de tarefas desenvolvido com Django + Dj
 Siga estes passos no terminal (cmd ou PowerShell no Windows, ou terminal no macOS/Linux):
 
 # 1. Clone este repositório
-git clone https://github.com/WendelRafael/To-do_backend_django.git
+git clone https://github.com/WendelRafael/To-do_backend_django.git<br>
 cd To-do_backend_django
 
 # 2. Crie e ative um ambiente virtual
-# No Windows:
-python -m venv venv
+- No Windows:
+python -m venv venv<br>
 venv\Scripts\activate
 
-# No macOS/Linux:
-python3 -m venv venv
+- No macOS/Linux:
+python3 -m venv venv<br>
 source venv/bin/activate
 
 # 3. Instale as dependências
@@ -31,10 +31,7 @@ python manage.py migrate
 
 # 5. Crie um super-usuário (administrador)
 python manage.py createsuperuser
-# Você será solicitado a entrar com usuário, e-mail, senha etc.
-
-# 6. (Opcional) carregue dados iniciais ou fixtures se houver
-# python manage.py loaddata <nome_da_fixture>.json
 
 # 7. Execute o servidor de desenvolvimento
 python manage.py runserver
+
